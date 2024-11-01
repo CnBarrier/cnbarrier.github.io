@@ -1,159 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-<title>Page Title</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽签页面</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden; /* 隐藏溢出内容 */
+        }
 
-/* Style the body */
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-}
+        .overlay {
+            position: fixed; /* 固定位置，覆盖整个页面 */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgb(0, 0, 0); /* 黑色遮罩 */
+            z-index: 999; /* 确保在最上层 */
+            opacity: 1; /* 初始不透明度为1 */
+            transition: opacity 1s ease; /* 添加过渡效果 */
+        }
 
-/* Header/logo Title */
-.header {
-  padding: 80px;
-  text-align: center;
-  background: #1abc9c;
-  color: white;
-}
+        .splashscreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            color: white;
+            z-index: 1000; /* 确保在遮罩层之上 */
+            opacity: 0; /* 初始不透明度为0 */
+            transition: opacity 1s ease; /* 添加过渡效果 */
+        }
 
-/* Increase the font size of the heading */
-.header h1 {
-  font-size: 40px;
-}
+        .visible {
+            opacity: 1; /* 显示时不透明度为1 */
+        }
 
-/* Style the top navigation bar */
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-}
-
-/* Style the navigation bar links */
-.navbar a {
-  float: left;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 20px;
-  text-decoration: none;
-}
-
-/* Right-aligned link */
-.navbar a.right {
-  float: right;
-}
-
-/* Change color on hover */
-.navbar a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Column container */
-.row {  
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-}
-
-/* Create two unequal columns that sits next to each other */
-/* Sidebar/left column */
-.side {
-  -ms-flex: 30%; /* IE10 */
-  flex: 30%;
-  background-color: #f1f1f1;
-  padding: 20px;
-}
-
-/* Main column */
-.main {   
-  -ms-flex: 70%; /* IE10 */
-  flex: 70%;
-  background-color: white;
-  padding: 20px;
-}
-
-/* Fake image, just for this example */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Footer */
-.footer {
-  padding: 20px;
-  text-align: center;
-  background: #ddd;
-}
-
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
-  .row {   
-    flex-direction: column;
-  }
-}
-
-/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
-@media screen and (max-width: 400px) {
-  .navbar a {
-    float: none;
-    width: 100%;
-  }
-}
-</style>
+        .footer {
+            position: fixed; /* 固定位置 */
+            bottom: 10px; /* 距离底部10px */
+            left: 10px; /* 距离左边10px */
+            color: white; /* 字体颜色 */
+            font-size: 1em; /* 字体大小 */
+            z-index: 998; /* 确保在遮罩层之下 */
+        }
+    </style>
 </head>
 <body>
+    <!-- 黑色遮罩层 -->
+    <div class="overlay"></div>
 
-<div class="header">
-  <h1>My Website</h1>
-  <p>A website created by me.</p>
-</div>
+    <!-- Splash Screen -->
+    <div id="splashscreen" class="splashscreen">
+        <!-- 随机文本将插入到这里 -->
+    </div>
 
-<div class="navbar">
-  <a href="#">Link</a>
-  <a href="#">Link</a>
-  <a href="#">Link</a>
-  <a href="#" class="right">Link</a>
-</div>
+    <!-- 背景图层 -->
+    <div id="background"></div>
 
-<div class="row">
-  <div class="side">
-    <h2>自建网站极简教学</h2>
-    <h5>Photo of me:</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    <h3>More Text</h3>
-    <p>Lorem ipsum dolor sit ame.</p>
-    <div class="fakeimg" style="height:60px;">Image</div><br>
-    <div class="fakeimg" style="height:60px;">Image</div><br>
-    <div class="fakeimg" style="height:60px;">Image</div>
-  </div>
-  <div class="main">
-    <h2>TITLE HEADING</h2>
-    <h5>Title description, Dec 7, 2017</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>Some text..</p>
-    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    <br>
-    <h2>TITLE HEADING</h2>
-    <h5>Title description, Sep 2, 2017</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>Some text..</p>
-    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-  </div>
-</div>
+    <!-- 高斯模糊窗口 -->
+    <div id="modal">
+        <!-- 抽签结果标题 -->
+        <div id="result-title-container">
+            <span id="result-title">牢九班的抽签系统 | V1.0</span>
+        </div>
+    
+        <!-- 抽签结果内容 -->
+        <div id="container">
+            <div id="spacer" class="spacer"></div> <!-- 上方空行 -->
+            <div id="result">↓ 按下按钮后输出倒霉蛋学号 ↓</div>
+        </div>
+    
+        <!-- 按钮容器，控制按钮位于底部 -->
+        <div id="button-container">
+            <button onclick="drawLot()">开始抽签</button>
+        </div>
+    </div>    
 
-<div class="footer">
-  <h2>Footer</h2>
-</div>
+    <!-- 在 splashscreen 之后添加 footer -->
+    <div class="footer">
+        By CnBarrier
+    </div>
 
+    <script src="script.js"></script>
+    <script>
+        // 定义一个包含多个文本的数组
+        const splashMessages = [
+            "“上课！不要讲话！” ——赵老师",
+            "“好了啊！（捶桌）” ——赵老师",
+            "“别讲了！” ——戴老师",
+            "“找抽啊？” ——戴老师",
+            "做这个抽签系统，我2:30睡的，5：30就……",
+        ];
+
+        // 在页面加载完成后显示 splash screen
+        window.onload = function() {
+            const splashscreen = document.getElementById("splashscreen");
+            const overlay = document.querySelector(".overlay");
+
+            // 随机选择一个文本
+            const randomIndex = Math.floor(Math.random() * splashMessages.length);
+            splashscreen.textContent = splashMessages[randomIndex]; // 设置随机文本
+
+            splashscreen.classList.add("visible"); // 添加可见类，触发淡入效果
+
+            setTimeout(() => {
+                splashscreen.classList.remove("visible"); // 移除可见类，触发淡出效果
+                overlay.style.opacity = "0"; // 开始淡出遮罩层
+                // 等待动画结束后再将元素从 DOM 中移除
+                setTimeout(() => {
+                    splashscreen.style.display = "none"; // 隐藏 splash screen
+                    overlay.style.display = "none"; // 隐藏遮罩层
+                }, 1000); // 等待1000毫秒以匹配过渡效果
+            }, 3000); // 3秒后开始淡出
+        };
+    </script>
 </body>
 </html>
