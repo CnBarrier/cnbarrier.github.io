@@ -60,7 +60,7 @@
             align-self: flex-end;
             margin-top: 0.5em;
             font-size: 0.5em;
-            margin-right: 300px;
+            margin-right: 250px;
             text-align: right;
             width: 100%;
             display: flex;
@@ -74,6 +74,35 @@
             color: white;
             font-size: 1em;
             z-index: 998;
+        }
+
+        /* 更新日志样式 */
+        .update-log {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 5px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            color: #333;
+        }
+
+        .update-log h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .update-log ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        .update-log ul li {
+            margin-bottom: 5px;
+            text-align: left;
         }
     </style>
 </head>
@@ -94,7 +123,7 @@
     <div id="modal">
         <!-- 抽签结果标题 -->
         <div id="result-title-container">
-            <span id="result-title">牢九班的抽签系统 | V24.11.1</span>
+            <span id="result-title">牢九班的抽签系统 | V1.1</span>
         </div>
     
         <!-- 抽签结果内容 -->
@@ -106,6 +135,16 @@
         <!-- 按钮容器，控制按钮位于底部 -->
         <div id="button-container">
             <button onclick="drawLot()">开始抽签</button>
+        </div>
+        
+        <!-- 更新日志 -->
+        <div class="update-log">
+            <h2>更新日志 - 2024.11.2</h2>
+            <ul>
+                <div>· 修复“开始抽签”按钮在抽取结果出现之前可以被连续点击两次的问题</div>
+                <div>· 在“script.js”内添加了点科技与狠活</div>
+                <div>· 某些特定学号的聪明宝宝将直接显示名字（找我可以提交！）</div>
+            </ul>
         </div>
     </div>    
 
@@ -123,6 +162,7 @@
             { text: "别讲了！", author: "戴老师" },
             { text: "找抽啊？", author: "戴老师" },
             { text: "你们都是聪明宝宝", author: "戴老师" },
+            { text: "讲什么呀？考的很好吗？", author: "戴老师" },
             { text: "做这个抽签系统，我2:30睡的，5：30就……", author: "？？？" }
         ];
 
@@ -155,4 +195,4 @@
         };
     </script>
 </body>
-</html>  
+</html>

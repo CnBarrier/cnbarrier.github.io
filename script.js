@@ -4,10 +4,9 @@ const maxNumber = 57;
 const drawnNumbers = [];
 const specialOutputs = {
     17: "17号，谁家创始人？",
-    27: "牢斌，想你了！",
     25: "吕振华",
-    16: "韩子敖",
-    47: "朱峪林",
+    27: "石斌，想你了！",
+    56: "朱峪林",
 };
 
 // 抽签逻辑
@@ -17,7 +16,7 @@ function drawLot() {
 
     // 检查是否已抽完所有学号
     if (drawnNumbers.length >= maxNumber - minNumber + 1) {
-        alert("不是哥们，全抽完了？");
+        alert("一节课叫了56个人？");
         return;
     }
 
@@ -30,22 +29,22 @@ function drawLot() {
     resultElement.style.alignItems = "center";
     resultElement.style.fontSize = "10em";
 
-    const duration = 3000;
+    const duration = 2000;
     const startTime = Date.now();
     let finalNumber;
 
     // 显示随机数
     function displayRandomNumber() {
-        // 生成不重复的随机数，并在5%概率下设为46
+        // 生成不重复的随机数，并且56号的抽取概率为10%
         do {
-            finalNumber = Math.random() < 0.05 ? 46 : getRandomNumber();
+            finalNumber = Math.random() < 0.1 ? 56 : getRandomNumber();
         } while (drawnNumbers.includes(finalNumber));
 
         resultElement.innerText = finalNumber;
 
         // 控制显示速度
         if (Date.now() - startTime < duration) {
-            setTimeout(displayRandomNumber, 25);
+            setTimeout(displayRandomNumber, 1);
         } else {
             showFinalResult();
         }
@@ -61,7 +60,7 @@ function drawLot() {
         setTimeout(() => {
             button.disabled = false;
             button.style.cursor = "";
-        }, 1000);
+        }, 500);
     }
 
     displayRandomNumber();
