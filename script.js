@@ -1,6 +1,6 @@
 // 抽签系统配置
 const minNumber = 1;
-const maxNumber = 56;
+const maxNumber = 57;
 const drawnNumbers = [];
 const specialOutputs = {
     17: "17号，谁家创始人？",
