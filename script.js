@@ -34,22 +34,29 @@ function drawLot() {
     const startTime = Date.now();
     let finalNumber;
 
-    // 显示随机数
-    function displayRandomNumber() {
-        // 生成不重复的随机数，并且56号的抽取概率为10%
-        do {
-            finalNumber = Math.random() < 0.1 ? 56 : getRandomNumber();
-        } while (drawnNumbers.includes(finalNumber));
-
-        resultElement.innerText = finalNumber;
-
-        // 控制显示速度
-        if (Date.now() - startTime < duration) {
-            setTimeout(displayRandomNumber, 1);
+// 显示随机数
+function displayRandomNumber() {
+    // 生成不重复的随机数，56号的概率为10%，17号的概率为0.6%
+    do {
+        const rand = Math.random();
+        if (rand < 0.1) {
+            finalNumber = 56;
+        } else if (rand >= 0.1 && rand < 0.106) {
+            finalNumber = 17;
         } else {
-            showFinalResult();
+            finalNumber = getRandomNumber();
         }
+    } while (drawnNumbers.includes(finalNumber));
+
+    resultElement.innerText = finalNumber;
+
+    // 控制显示速度
+    if (Date.now() - startTime < duration) {
+        setTimeout(displayRandomNumber, 1);
+    } else {
+        showFinalResult();
     }
+}
 
     // 显示最终结果并冷却按钮
     function showFinalResult() {
