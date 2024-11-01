@@ -1,24 +1,35 @@
 // 设置抽签的学号范围
 const minNumber = 1;  // 最小值
-const maxNumber = 56; // 最大值
+const maxNumber = 57; // 最大值
 
 // 存储已经抽取的学号
 let drawnNumbers = [];
 
 // 特定学号输出结果的映射
 const specialOutputs = {
-    17: "抽到了17号，但这是0.6%？",
+    17: "17号创始人",
     27: "牢斌，想你了！",
-    25: "吕！振！华！",
-    16: "韩！子！敖！",
-    46: "朱！峪！林！", 
+    25: "吕振华",
+    16: "韩子敖",
+    46: "朱峪林", 
 };
 
 // 抽签逻辑函数
 function drawLot() {
+    const button = document.querySelector("button");
+    
+    // 禁用按钮并设置为灰色
+    button.disabled = true;
+    button.style.backgroundColor = "#ccc"; // 灰色背景
+    button.style.cursor = "not-allowed"; // 更改鼠标样式为不可点击
+
     // 检查是否所有学号都已抽取
     if (drawnNumbers.length >= maxNumber - minNumber + 1) {
         alert("不是哥们，全抽完了？");
+        // 恢复按钮状态
+        button.disabled = false;
+        button.style.backgroundColor = ""; // 恢复默认背景颜色
+        button.style.cursor = ""; // 恢复鼠标样式
         return; // 如果所有学号都抽取完，停止抽取
     }
 
@@ -60,6 +71,11 @@ function drawLot() {
 
             resultElement.innerText = output; // 显示输出结果
             resultElement.style.fontSize = "10em"; // 最终结果的字体大小
+
+            // 恢复按钮状态
+            button.disabled = false;
+            button.style.backgroundColor = ""; // 恢复默认背景颜色
+            button.style.cursor = ""; // 恢复鼠标样式
         }
     }
 
@@ -82,5 +98,5 @@ window.onload = function() {
         setTimeout(() => {
             splashscreen.style.display = "none"; // 隐藏 splash screen
         }, 500); // 等待500毫秒以匹配过渡效果
-    }, 2000); // 2秒后开始淡出
+    }, 3000); // 3秒后开始淡出 
 };
