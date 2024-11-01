@@ -34,29 +34,31 @@ function drawLot() {
     const startTime = Date.now();
     let finalNumber;
 
-// 显示随机数
-function displayRandomNumber() {
-    // 生成不重复的随机数，56号的概率为10%，17号的概率为0.6%
-    do {
-        const rand = Math.random();
-        if (rand < 0.1) {
-            finalNumber = 56;
-        } else if (rand >= 0.1 && rand < 0.106) {
-            finalNumber = 17;
+    // 显示随机数
+    function displayRandomNumber() {
+        // 设置不同的概率
+        do {
+            const rand = Math.random();
+            if (rand < 0.2) {
+                finalNumber = 3; // 20%的概率抽到3号
+            } else if (rand >= 0.2 && rand < 0.3) {
+                finalNumber = 56; // 10%的概率抽到56号
+            } else if (rand >= 0.3 && rand < 0.306) {
+                finalNumber = 17; // 0.6%的概率抽到17号
+            } else {
+                finalNumber = getRandomNumber(); // 其他情况下生成一个随机数
+            }
+        } while (drawnNumbers.includes(finalNumber));
+
+        resultElement.innerText = finalNumber;
+
+        // 控制显示速度
+        if (Date.now() - startTime < duration) {
+            setTimeout(displayRandomNumber, 1);
         } else {
-            finalNumber = getRandomNumber();
+            showFinalResult();
         }
-    } while (drawnNumbers.includes(finalNumber));
-
-    resultElement.innerText = finalNumber;
-
-    // 控制显示速度
-    if (Date.now() - startTime < duration) {
-        setTimeout(displayRandomNumber, 1);
-    } else {
-        showFinalResult();
     }
-}
 
     // 显示最终结果并冷却按钮
     function showFinalResult() {
