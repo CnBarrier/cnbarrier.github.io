@@ -6,8 +6,9 @@
     <title>牢九班的抽签系统</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* 页面基本样式 */
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Microsoft Yahei", Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,19 +16,20 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
-            overflow: hidden; /* 隐藏溢出内容 */
+            overflow: hidden;
         }
 
+        /* 遮罩和开场画面样式 */
         .overlay {
-            position: fixed; /* 固定位置，覆盖整个页面 */
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgb(0, 0, 0); /* 黑色遮罩 */
-            z-index: 999; /* 确保在最上层 */
-            opacity: 1; /* 初始不透明度为1 */
-            transition: opacity 1s ease; /* 添加过渡效果 */
+            background-color: rgb(0, 0, 0);
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 1s ease;
         }
 
         .splashscreen {
@@ -37,26 +39,38 @@
             right: 0;
             bottom: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 5em;
+            font-size: 5em; /* 增大字体 */
             color: white;
-            z-index: 1000; /* 确保在遮罩层之上 */
-            opacity: 0; /* 初始不透明度为0 */
-            transition: opacity 1s ease; /* 添加过渡效果 */
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-align: center;
+            padding: 0 20px; /* 增加左右边距 */
         }
 
         .visible {
-            opacity: 1; /* 显示时不透明度为1 */
+            opacity: 1;
+        }
+
+        /* 引用人名样式 */
+        .author {
+            align-self: flex-end;
+            margin-top: 0.5em;
+            font-size: 0.5em; /* 设置更小字体 */
+            margin-right: 350px; /* 让作者名字与浏览器边缘保持距离 */
+            text-align: right;
         }
 
         .footer {
-            position: fixed; /* 固定位置 */
-            bottom: 10px; /* 距离底部10px */
-            left: 10px; /* 距离左边10px */
-            color: white; /* 字体颜色 */
-            font-size: 1em; /* 字体大小 */
-            z-index: 998; /* 确保在遮罩层之下 */
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-size: 1em;
+            z-index: 998;
         }
     </style>
 </head>
@@ -66,7 +80,8 @@
 
     <!-- Splash Screen -->
     <div id="splashscreen" class="splashscreen">
-        <!-- 随机文本将插入到这里 -->
+        <span id="quote-text"></span>
+        <div id="quote-author" class="author"></div>
     </div>
 
     <!-- 背景图层 -->
@@ -98,23 +113,30 @@
 
     <script src="script.js"></script>
     <script>
-        // 定义一个包含多个文本的数组
+        // 定义一个包含多个文本和引用人的数组
         const splashMessages = [
-            "“上课！不要讲话！” ——赵老师",
-            "“好了啊！（捶桌）” ——赵老师",
-            "“别讲了！” ——戴老师",
-            "“找抽啊？” ——戴老师",
-            "做这个抽签系统，我2:30睡的，5：30就……",
+            { text: "上课！不要讲话！", author: "赵老师" },
+            { text: "好了啊！（捶桌）", author: "赵老师" },
+            { text: "别讲了！", author: "戴老师" },
+            { text: "找抽啊？", author: "戴老师" },
+            { text: "你们都是聪明宝宝", author: "戴老师" },
+            { text: "做这个抽签系统，我2:30睡的，5：30就……", author: "？？？" }
         ];
 
-        // 在页面加载完成后显示 splash screen
+        // 页面加载完成后显示 splash screen
         window.onload = function() {
             const splashscreen = document.getElementById("splashscreen");
             const overlay = document.querySelector(".overlay");
+            const quoteText = document.getElementById("quote-text");
+            const quoteAuthor = document.getElementById("quote-author");
 
             // 随机选择一个文本
             const randomIndex = Math.floor(Math.random() * splashMessages.length);
-            splashscreen.textContent = splashMessages[randomIndex]; // 设置随机文本
+            const { text, author } = splashMessages[randomIndex];
+
+            // 设置名言和引用人名
+            quoteText.textContent = `“${text}”`;
+            quoteAuthor.textContent = `—— ${author}`;
 
             splashscreen.classList.add("visible"); // 添加可见类，触发淡入效果
 
@@ -123,9 +145,9 @@
                 overlay.style.opacity = "0"; // 开始淡出遮罩层
                 // 等待动画结束后再将元素从 DOM 中移除
                 setTimeout(() => {
-                    splashscreen.style.display = "none"; // 隐藏 splash screen
-                    overlay.style.display = "none"; // 隐藏遮罩层
-                }, 1000); // 等待1000毫秒以匹配过渡效果
+                    splashscreen.style.display = "none";
+                    overlay.style.display = "none";
+                }, 1000); // 等待1秒以匹配过渡效果
             }, 3000); // 3秒后开始淡出
         };
     </script>

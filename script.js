@@ -1,102 +1,73 @@
-// 设置抽签的学号范围
-const minNumber = 1;  // 最小值
-const maxNumber = 57; // 最大值
-
-// 存储已经抽取的学号
-let drawnNumbers = [];
-
-// 特定学号输出结果的映射
+// 抽签系统配置
+const minNumber = 1;
+const maxNumber = 56;
+const drawnNumbers = [];
 const specialOutputs = {
-    17: "17号创始人",
+    17: "17号，谁家创始人？",
     27: "牢斌，想你了！",
     25: "吕振华",
     16: "韩子敖",
-    46: "朱峪林", 
+    47: "朱峪林",
 };
 
-// 抽签逻辑函数
+// 抽签逻辑
 function drawLot() {
     const button = document.querySelector("button");
-    
-    // 禁用按钮并设置为灰色
-    button.disabled = true;
-    button.style.backgroundColor = "#ccc"; // 灰色背景
-    button.style.cursor = "not-allowed"; // 更改鼠标样式为不可点击
+    const resultElement = document.getElementById("result");
 
-    // 检查是否所有学号都已抽取
+    // 检查是否已抽完所有学号
     if (drawnNumbers.length >= maxNumber - minNumber + 1) {
         alert("不是哥们，全抽完了？");
-        // 恢复按钮状态
-        button.disabled = false;
-        button.style.backgroundColor = ""; // 恢复默认背景颜色
-        button.style.cursor = ""; // 恢复鼠标样式
-        return; // 如果所有学号都抽取完，停止抽取
+        return;
     }
 
-    const duration = 3000; // 动画持续时间（毫秒）
-    const startTime = Date.now(); // 记录开始时间
-    const resultElement = document.getElementById("result");
-    let lastRandomNum; // 用于保存最后一个随机数
+    // 禁用按钮并显示动画
+    button.disabled = true;
+    button.style.backgroundColor = "#ccc";
+    button.style.cursor = "not-allowed";
+    resultElement.style.display = "flex";
+    resultElement.style.justifyContent = "center";
+    resultElement.style.alignItems = "center";
+    resultElement.style.fontSize = "10em";
 
+    const duration = 3000;
+    const startTime = Date.now();
+    let finalNumber;
+
+    // 显示随机数
     function displayRandomNumber() {
-        // 设置动画期间的字体大小
-        resultElement.style.fontSize = "10em"; // 动画期间的字体大小
-
-        // 生成随机数并显示，确保不重复
+        // 生成不重复的随机数，并在5%概率下设为46
         do {
-            // 计算随机数，调整46号的概率为5%
-            const randomNum = Math.floor(Math.random() * 100); // 生成0到99的随机数
-            if (randomNum < 5) {
-                lastRandomNum = 46; // 5%的概率抽到46号
-            } else {
-                lastRandomNum = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
-            }
-        } while (drawnNumbers.includes(lastRandomNum)); // 如果已抽取过，则重新生成
+            finalNumber = Math.random() < 0.05 ? 46 : getRandomNumber();
+        } while (drawnNumbers.includes(finalNumber));
 
-        resultElement.innerText = lastRandomNum; // 显示当前随机数
+        resultElement.innerText = finalNumber;
 
-        // 计算当前已过时间，控制速度
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1); // 限制进度最大为1
-
-        if (progress < 1) {
-            const currentSpeed = 25; // 每次更新的时间间隔
-            setTimeout(displayRandomNumber, currentSpeed);
+        // 控制显示速度
+        if (Date.now() - startTime < duration) {
+            setTimeout(displayRandomNumber, 25);
         } else {
-            // 动画结束后，显示最后一个生成的随机数作为最终结果
-            drawnNumbers.push(lastRandomNum); // 将抽取的结果添加到已抽取数组中
-
-            // 获取特定学号的输出结果
-            const output = getSpecialOutput(lastRandomNum);
-
-            resultElement.innerText = output; // 显示输出结果
-            resultElement.style.fontSize = "10em"; // 最终结果的字体大小
-
-            // 恢复按钮状态
-            button.disabled = false;
-            button.style.backgroundColor = ""; // 恢复默认背景颜色
-            button.style.cursor = ""; // 恢复鼠标样式
+            showFinalResult();
         }
     }
 
-    displayRandomNumber(); // 启动随机数显示
-}
+    // 显示最终结果并冷却按钮
+    function showFinalResult() {
+        drawnNumbers.push(finalNumber);
+        resultElement.innerText = specialOutputs[finalNumber] || `${finalNumber} 号，站！`;
+        button.style.backgroundColor = ""; // 恢复按钮默认背景颜色
 
-// 获取特定学号的输出结果
-function getSpecialOutput(number) {
-    return specialOutputs[number] || `${number} 号，站！`; // 默认输出
-}
-
-// 在页面加载完成后显示 splash screen
-window.onload = function() {
-    const splashscreen = document.getElementById("splashscreen");
-    splashscreen.classList.add("visible"); // 添加可见类，触发淡入效果
-
-    setTimeout(() => {
-        splashscreen.classList.remove("visible"); // 移除可见类，触发淡出效果
-        // 等待动画结束后再将元素从 DOM 中移除
+        // 冷却结束恢复按钮可点击
         setTimeout(() => {
-            splashscreen.style.display = "none"; // 隐藏 splash screen
-        }, 500); // 等待500毫秒以匹配过渡效果
-    }, 3000); // 3秒后开始淡出 
-};
+            button.disabled = false;
+            button.style.cursor = "";
+        }, 1000);
+    }
+
+    displayRandomNumber();
+}
+
+// 生成随机数
+function getRandomNumber() {
+    return Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+}
