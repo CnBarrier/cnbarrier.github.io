@@ -4,6 +4,7 @@ const maxNumber = 57;
 const drawnNumbers = [];
 const specialOutputs = {
     17: "17号，谁家创始人？",
+    15: "韩子敖",
     25: "吕振华",
     27: "石斌，想你了！",
     56: "朱峪林",
