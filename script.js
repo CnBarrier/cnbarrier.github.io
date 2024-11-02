@@ -3,6 +3,7 @@ const backgroundImages = [
     'assets/background1.png',
     'assets/background2.png',
     'assets/background3.png',
+    'assets/background4.png',
 ];
 
 // 开屏动画的文字
@@ -190,6 +191,12 @@ function toggleUpdateLog() {
         }, 10); // 小延迟确保样式生效
     }
 }
+
+// 显示更新日志
+document.getElementById('update-log').classList.remove('hidden');
+
+// 隐藏更新日志
+document.getElementById('update-log').classList.add('hidden');
 
 // 点击事件监听器
 window.addEventListener('click', function(event) {
