@@ -73,7 +73,7 @@ button:active {
 }
 
 button:disabled {
-    cursor: not-allowed; /* 禁止样式 */
+    cursor: not-allowed; 
     background-color: #ccc; 
     opacity: 0.6; 
 }
@@ -111,42 +111,52 @@ button:disabled {
     position: fixed;
     bottom: 80px; 
     right: 10px; 
-    background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%); /* 渐变背景 */
-    border: 1px solid rgba(0, 0, 0, 0.1); /* 边框 */
+    background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%); 
+    border: 1px solid rgba(0, 0, 0, 0.1); 
     border-radius: 15px; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
-    padding: 20px; /* 增加内边距 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+    padding: 20px; 
     max-width: 500px; 
     z-index: 999; 
     height: auto; 
     opacity: 0; 
-    transform: translateY(20px); /* 初始状态稍微偏下 */
+    transform: translateY(20px); 
     text-align: left;
     transition: opacity 0.3s cubic-bezier(0.2, 0, 0.3, 1), transform 0.3s cubic-bezier(0.2, 0, 0.3, 1); 
 }
 
 /* 显示时的样式 */
 .update-log.visible {
-    opacity: 1; /* 显示 */
-    transform: translateY(0); /* 向上移动到原位 */
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
 .update-log h2 {
-    font-size: 1.5em; /* 标题更大 */
-    color: #333; /* 标题颜色 */
-    margin: 0 0 10px; /* 下边距 */
+    font-size: 1.5em; 
+    color: #333; 
+    margin: 0 0 10px;
 }
 
 .update-log p {
-    font-size: 1em; /* 正文字体大小 */
-    color: #555; /* 正文颜色 */
-    line-height: 1.5; /* 行间距 */
+    font-size: 1em; 
+    color: #555; 
+    line-height: 1.5; 
 }
 
 .update-log.visible {
-    transform: translateY(0); /* 移动到原位 */
+    transform: translateY(0); 
     max-height: auto; 
     opacity: 1; 
+}
+
+.update-log-container {
+    max-height: 350px; 
+    overflow-y: auto; 
+    background-color: rgba(255, 255, 255, 0.9); 
+    border: 1px solid rgba(0, 0, 0, 0.1); 
+    border-radius: 20px; 
+    padding: 10px; 
+    margin-bottom: 20px; 
 }
 
 /* 课程表按钮样式 */
