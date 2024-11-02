@@ -205,7 +205,7 @@ window.addEventListener('click', function(event) {
 });
 
 // 抽签系统配置
-const minNumber = 1, maxNumber = 56, drawnNumbers = [];
+const minNumber = 1, maxNumber = 57, drawnNumbers = [];
 
 // 抽签逻辑
 function drawLot() {
