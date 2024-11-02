@@ -41,7 +41,7 @@ window.onload = function() {
             splashscreen.style.display = "none";
             overlay.style.display = "none";
         }, 1000);
-    }, 3000);
+    }, 2000);
 
     // 提取颜色
     extractColorFromImage(selectedImage); // 传入随机选择的背景图片
