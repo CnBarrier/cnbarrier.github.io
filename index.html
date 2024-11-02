@@ -3,197 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>牢九班的抽签系统</title>
+    <title>赵老师の抽签系统</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon"> <!-- 添加 favicon -->
-    <style>
-        /* 页面基本样式 */
-        body {
-            font-family: "Microsoft Yahei", Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            overflow: hidden;
-        }
-
-        /* 遮罩和开场画面样式 */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgb(0, 0, 0);
-            z-index: 999;
-            opacity: 1;
-            transition: opacity 1s ease;
-        }
-
-        .splashscreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 5em;
-            color: white;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 1s ease;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .visible {
-            opacity: 1;
-        }
-
-        /* 引用人名样式 */
-        .author {
-            align-self: flex-end;
-            margin-top: 0.5em;
-            font-size: 0.5em;
-            margin-right: 250px;
-            text-align: right;
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            color: white;
-            font-size: 1em;
-            z-index: 998;
-        }
-
-        /* 更新日志样式 */
-        .update-log {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            padding: 5px;
-            margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 600px;
-            color: #333;
-        }
-
-        .update-log h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .update-log ul {
-            list-style-type: disc;
-            padding-left: 20px;
-            text-align: left;
-        }
-
-        .update-log ul li {
-            margin-bottom: 5px;
-            text-align: left;
-        }
-    </style>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-    <!-- 黑色遮罩层 -->
     <div class="overlay"></div>
 
-    <!-- Splash Screen -->
     <div id="splashscreen" class="splashscreen">
         <span id="quote-text"></span>
         <div id="quote-author" class="author"></div>
     </div>
 
-    <!-- 背景图层 -->
     <div id="background"></div>
 
-    <!-- 高斯模糊窗口 -->
     <div id="modal">
-        <!-- 抽签结果标题 -->
         <div id="result-title-container">
-            <span id="result-title">牢九班的抽签系统 | V1.1</span>
+            <span id="result-title">赵老师の抽签系统 | V1.2</span>
         </div>
     
-        <!-- 抽签结果内容 -->
         <div id="container">
-            <div id="spacer" class="spacer"></div> <!-- 上方空行 -->
+            <div id="spacer" class="spacer"></div>
             <div id="result">↓ 按下按钮后输出倒霉蛋学号 ↓</div>
         </div>
     
-        <!-- 按钮容器，控制按钮位于底部 -->
         <div id="button-container">
             <button onclick="drawLot()">开始抽签</button>
         </div>
-        
-        <!-- 更新日志 -->
-        <div class="update-log">
-            <h2>更新日志 - 2024.11.2</h2>
-            <ul>
-                <div>· 修复“开始抽签”按钮在抽取结果出现之前可以被连续点击两次的问题</div>
-                <div>· 在“script.js”内添加了点科技与狠活</div>
-                <div>· 某些特定学号的聪明宝宝将直接显示名字（找我可以提交！）</div>
-            </ul>
+
+        <div class="button-container">
+            <button class="update-log-button" onclick="toggleUpdateLog()">📝更新日志</button>
+            <button class="schedule-button" onclick="showSchedule()">课程表（Beta）</button>
         </div>
-    </div>    
-
-    <!-- 在 splashscreen 之后添加 footer -->
-    <div class="footer">
-        By CnBarrier
+        
+        <!-- 更新日志内容 -->
+        <div id="update-log" class="update-log" style="display: none;">
+            <h3>更新日志 | 24.11.4</h3>
+                <div>· 添加 查看更新日志的按钮以及相应动画</div>
+                <div>· 添加 从背景图上取色作为主题色，使整个页面看起来更好看</div>
+                <div>· 添加 若干个开屏名人名言</div>    
+                <div>· 修复 同一个学号会被连续抽取两次的问题 [防君子不防小人点刷新]</div> 
+                <div>· 移除 多余的 toggleUpdateLog 函数定义，合并了按钮变色和更新日志的显示逻辑，确保代码简洁</div>
+        </div>   
     </div>
-
-    <script src="script.js"></script>
-    <script>
-        // 定义一个包含多个文本和引用人的数组
-        const splashMessages = [
-            { text: "上课！不要讲话！", author: "赵老师" },
-            { text: "好了啊！（捶桌）", author: "赵老师" },
-            { text: "别讲了！", author: "戴老师" },
-            { text: "找抽啊？", author: "戴老师" },
-            { text: "你们都是聪明宝宝", author: "戴老师" },
-            { text: "讲什么呀？考的很好吗？", author: "戴老师" },
-            { text: "做这个抽签系统，我2:30睡的，5：30就……", author: "？？？" }
-        ];
-
-        // 页面加载完成后显示 splash screen
-        window.onload = function() {
-            const splashscreen = document.getElementById("splashscreen");
-            const overlay = document.querySelector(".overlay");
-            const quoteText = document.getElementById("quote-text");
-            const quoteAuthor = document.getElementById("quote-author");
-
-            // 随机选择一个文本
-            const randomIndex = Math.floor(Math.random() * splashMessages.length);
-            const { text, author } = splashMessages[randomIndex];
-
-            // 设置名言和引用人名
-            quoteText.textContent = `“${text}”`;
-            quoteAuthor.textContent = `—— ${author}`;
-
-            splashscreen.classList.add("visible"); // 添加可见类，触发淡入效果
-
-            setTimeout(() => {
-                splashscreen.classList.remove("visible"); // 移除可见类，触发淡出效果
-                overlay.style.opacity = "0"; // 开始淡出遮罩层
-                // 等待动画结束后再将元素从 DOM 中移除
-                setTimeout(() => {
-                    splashscreen.style.display = "none";
-                    overlay.style.display = "none";
-                }, 1000); // 等待1秒以匹配过渡效果
-            }, 3000); // 3秒后开始淡出
-        };
-    </script>
 </body>
 </html>

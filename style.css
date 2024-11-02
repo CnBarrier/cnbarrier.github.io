@@ -1,51 +1,228 @@
+/* 字体设置 */
+@font-face {
+    font-family: 'MiSans';
+    src: url('https://font.sec.miui.com/font/css?family=MiSans:400,450:Chinese_Simplify,Latin&display=swap') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* 页面基本样式 */
+:root {
+    --primary-color: rgba(0, 123, 255, 0.8);
+    --primary-color-hover: rgba(0, 123, 255, 1);
+    --bg-color: #f0f0f0;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
 body {
-    font-family: "Microsoft Yahei", Arial, sans-serif;
+    font-family: 'MiSans', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
-    overflow: hidden; /* 隐藏溢出内容 */
+    background-color: var(--bg-color);
+    overflow: hidden;
 }
 
+/* 动画 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 按钮样式 */
+button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    border-radius: 20px;
+}
+
+button:hover {
+    background-color: var(--primary-color-hover);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+button:disabled {
+    cursor: not-allowed; /* 禁止样式 */
+    background-color: #ccc; 
+    opacity: 0.6; 
+}
+
+/* 更新日志按钮样式 */
+.update-log-button {
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;  
+    background-color: var(--primary-color);
+    color: white; 
+    border: none; 
+    width: 146px; 
+    height: 50px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    cursor: pointer; 
+    font-size: 1.2em; 
+    z-index: 1000; 
+    border-radius: 20px;
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    padding-left: 1px; 
+    padding-right: 1px; 
+}
+
+.update-log-button:disabled {
+    cursor: pointer; 
+    opacity: 0.6;
+}
+
+/* 更新日志内容样式 */
+.update-log {
+    position: fixed;
+    bottom: 80px; 
+    right: 10px; 
+    background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%); /* 渐变背景 */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* 边框 */
+    border-radius: 15px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+    padding: 20px; /* 增加内边距 */
+    max-width: 500px; 
+    z-index: 999; 
+    height: auto; 
+    opacity: 0; 
+    transform: translateY(20px); /* 初始状态稍微偏下 */
+    text-align: left;
+    transition: opacity 0.3s cubic-bezier(0.2, 0, 0.3, 1), transform 0.3s cubic-bezier(0.2, 0, 0.3, 1); 
+}
+
+/* 显示时的样式 */
+.update-log.visible {
+    opacity: 1; /* 显示 */
+    transform: translateY(0); /* 向上移动到原位 */
+}
+
+.update-log h2 {
+    font-size: 1.5em; /* 标题更大 */
+    color: #333; /* 标题颜色 */
+    margin: 0 0 10px; /* 下边距 */
+}
+
+.update-log p {
+    font-size: 1em; /* 正文字体大小 */
+    color: #555; /* 正文颜色 */
+    line-height: 1.5; /* 行间距 */
+}
+
+.update-log.visible {
+    transform: translateY(0); /* 移动到原位 */
+    max-height: auto; 
+    opacity: 1; 
+}
+
+/* 课程表按钮样式 */
+.schedule-button {
+    position: fixed;
+    bottom: 20px; 
+    left: 20px;  /* 靠左 */
+    background-color: var(--primary-color);
+    color: white; 
+    border: none; 
+    width: 146px; 
+    height: 50px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    cursor: pointer; 
+    font-size: 1.2em; 
+    z-index: 1000; 
+    border-radius: 20px;
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    padding-left:9px; 
+    padding-right: 1px; 
+}
+
+/* 遮罩和开场画面样式 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+/* 开屏遮罩 */
 .splashscreen {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 3em;
-    z-index: 1000; /* 使其在最上层 */
-    opacity: 0; /* 初始不透明度为0 */
-    transition: opacity 0.5s ease; /* 添加过渡效果 */
+    font-size: 5em;
+    color: white;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 1s ease;
+    text-align: center;
+    padding: 0 20px;
 }
 
 .visible {
-    opacity: 1; /* 显示时不透明度为1 */
+    opacity: 1;
 }
 
 .hidden {
-    opacity: 0; /* 隐藏时不透明度变为0 */
+    opacity: 0;
 }
 
-/* 通用样式 */
-body, 
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+/* 引用人名样式 */
+.author {
+    align-self: flex-end;
+    margin-top: 0.5em;
+    font-size: 0.4em;
+    margin-right: 250px;
+    text-align: right;
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Microsoft Yahei, Arial, sans-serif;
+    justify-content: flex-end;
 }
 
 /* 背景图样式 */
@@ -55,32 +232,33 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('assets/background.png');
     background-size: cover;
     background-position: center;
     z-index: -1;
 }
 
-/* 高斯模糊窗口样式 */
+/* 高级材质模糊窗口样式 */
 #modal {
     position: absolute;
     width: 85%;
-    height: 80%;
+    height: 75%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px) saturate(150%) contrast(90%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1); 
+    -webkit-backdrop-filter: blur(25px) saturate(150%) contrast(90%);
+    backdrop-filter: blur(25px) saturate(150%) contrast(90%);  
+    border: 1px solid rgba(255, 255, 255, 0.4); 
+    border-radius: 20px; 
     padding: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
+
 
 /* 抽签结果标题容器样式 */
 #result-title-container {
@@ -92,7 +270,7 @@ html {
 
 /* 标题样式 */
 #result-title {
-    font-size: 3vw; /* 使用 vw 单位保持标题在缩放时的比例 */
+    font-size: 3vw;
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
@@ -105,12 +283,12 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%; /* 让内容容器占满高度 */
+    height: 100%;
 }
 
 /* 空行占位样式 */
 .spacer {
-    flex-grow: 0.1; /* 让空行占据可用空间 */
+    flex-grow: 0.1;
 }
 
 /* 抽签结果文本样式 */
@@ -122,29 +300,8 @@ html {
     text-align: center;
 }
 
-/* 按钮容器样式 */
-#button-container {
-    margin-top: 20px; /* 按钮与抽签结果的间距 */
-}
-
-/* 按钮样式 */
-button {
-    padding: 15px 30px;
-    font-size: 1.5em;
-    border: none;
-    border-radius: 10px;
-    background-color: rgba(0, 123, 255, 0.8);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-button:hover {
-    background-color: rgba(0, 123, 255, 1);
-    transform: scale(1.05);
-}
-
-button:active {
-    transform: scale(0.95);
+/* 向上淡入的动画 */
+.fade-in {
+    opacity: 0;
+    animation: fadeInUp 0.5s forwards;
 }
