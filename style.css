@@ -163,7 +163,7 @@ button:disabled {
 .schedule-button {
     position: fixed;
     bottom: 20px; 
-    left: 20px;  /* 靠左 */
+    left: 20px; 
     background-color: var(--primary-color);
     color: white; 
     border: none; 
