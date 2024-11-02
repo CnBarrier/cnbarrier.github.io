@@ -267,3 +267,52 @@ function getRandomNumber() {
 function showSchedule() {
     alert("课程表功能正在开发中，敬请期待！");
 }
+
+// 音乐播放器
+function toggleMusicPlayer() {
+    const musicPlayer = document.getElementById("music-player");
+    if (musicPlayer.style.display === "none" || musicPlayer.style.display === "") {
+        musicPlayer.style.display = "block";
+        showCurrentSong(); // 显示当前歌曲信息
+    } else {
+        musicPlayer.style.display = "none";
+    }
+}
+
+function playMusic() {
+    const audio = document.getElementById("audio");
+    audio.play();
+}
+
+function pauseMusic() {
+    const audio = document.getElementById("audio");
+    audio.pause();
+}
+
+const currentSong = {
+    title: "示例歌曲名",
+    artist: "示例歌手名"
+};
+
+const musicPlayerButton = document.querySelector(".music-player-button");
+
+// 事件监听器
+musicPlayerButton.addEventListener("click", toggleMusicPlayer);
+
+// 更新歌曲信息的函数
+function showCurrentSong() {
+    const songInfo = document.querySelector(".current-song");
+    if (songInfo) {
+        songInfo.textContent = `${currentSong.title} - ${currentSong.artist}`;
+    } else {
+        const newSongInfo = document.createElement("div");
+        newSongInfo.className = "current-song";
+        newSongInfo.textContent = `${currentSong.title} - ${currentSong.artist}`;
+        musicPlayer.appendChild(newSongInfo);
+    }
+}
+
+// 初始化时显示歌曲信息
+document.addEventListener("DOMContentLoaded", () => {
+    showCurrentSong(); // 初始显示当前播放的歌曲信息
+});

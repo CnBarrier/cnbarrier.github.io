@@ -1,324 +1,321 @@
-/* 字体设置 */
-@font-face {
-    font-family: 'MiSans';
-    src: url('https://font.sec.miui.com/font/css?family=MiSans:400,450:Chinese_Simplify,Latin&display=swap') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-/* 页面基本样式 */
-:root {
-    --primary-color: rgba(0, 123, 255, 0.8);
-    --primary-color-hover: rgba(0, 123, 255, 1);
-    --bg-color: #f0f0f0;
-    --shadow-color: rgba(0, 0, 0, 0.5);
-}
-
-body {
-    font-family: 'MiSans', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-    background-color: var(--bg-color);
-    overflow: hidden;
-    /* 使整个页面上的所有文字不可被选中 */
-    -webkit-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
-    user-select: none; 
-}
-
-/* 动画 */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+    /* 字体设置 */
+    @font-face {
+        font-family: 'MiSans';
+        src: url('https://font.sec.miui.com/font/css?family=MiSans:400,450:Chinese_Simplify,Latin&display=swap') format('truetype');
+        font-weight: 400;
+        font-style: normal;
     }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+    /* 页面基本样式 */
+    :root {
+        --primary-color: rgba(0, 123, 255, 0.8);
+        --primary-color-hover: rgba(0, 123, 255, 1);
+        --bg-color: #f0f0f0;
+        --shadow-color: rgba(0, 0, 0, 0.5);
     }
-    to {
+
+    body {
+        font-family: 'MiSans', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        background-color: var(--bg-color);
+        overflow: hidden;
+        /* 使整个页面上的所有文字不可被选中 */
+        -webkit-user-select: none; 
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
+    }
+
+    /* 动画 */
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 按钮样式 */
+    button {
+        padding: 15px 30px;
+        font-size: 1.5em;
+        border: none;
+        background-color: var(--primary-color);
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        box-shadow: 0 4px 10px var(--shadow-color);
+        border-radius: 20px;
+    }
+
+    button:hover {
+        background-color: var(--primary-color-hover);
+        transform: scale(1.05);
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    button:disabled {
+        cursor: not-allowed; 
+        background-color: #ccc; 
+        opacity: 0.6; 
+    }
+
+    /* 更新日志按钮样式 */
+    .update-log-button {
+        position: fixed;
+        bottom: 20px; 
+        right: 20px;  
+        background-color: var(--primary-color);
+        color: white; 
+        border: none; 
+        width: 146px; 
+        height: 50px; 
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        cursor: pointer; 
+        font-size: 1.2em; 
+        z-index: 1000; 
+        border-radius: 20px;
+        padding-top: 10px; 
+        padding-bottom: 10px; 
+        padding-left: 1px; 
+        padding-right: 1px; 
+    }
+
+    .update-log-button:disabled {
+        cursor: pointer; 
+        opacity: 0.6;
+    }
+
+    /* 隐藏样式 */
+    .hidden {
+        display: none; /* 控制元素的显示与隐藏 */
+    }
+
+    /* 更新日志内容样式 */
+    .update-log {
+        position: fixed;
+        bottom: 80px; 
+        right: 10px; 
+        background: rgba(255, 255, 255, 0.75); 
+        -webkit-backdrop-filter: blur(55px) saturate(150%); 
+        backdrop-filter: blur(55px) saturate(150%); 
+        border: 1px solid rgba(255, 255, 255, 0.4); 
+        border-radius: 20px; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+        padding: 20px; 
+        max-width: 500px; 
+        z-index: 999; 
+        height: auto; 
+        opacity: 0; 
+        transform: translateY(20px); 
+        text-align: left;
+        transition: opacity 0.3s cubic-bezier(0.2, 0, 0.3, 1), transform 0.3s cubic-bezier(0.2, 0, 0.3, 1); 
+    }
+
+    /* 显示时的样式 */
+    .update-log.visible {
+        opacity: 1; 
+        transform: translateY(0); 
+        max-height: auto; 
+    }
+
+    .update-log h2 {
+        font-size: 1.5em; 
+        color: #333; 
+        margin: 0 0 10px;
+    }
+
+    .update-log p {
+        font-size: 1em; 
+        color: #555; 
+        line-height: 1.5; 
+    }
+
+    .update-log-container {
+        max-height: 350px; 
+        overflow-y: auto; 
+        background-color: rgba(255, 255, 255, 0.9); 
+        border: 1px solid rgba(0, 0, 0, 0.1); 
+        border-radius: 20px; 
+        padding: 10px; 
+        margin-bottom: 20px; 
+    }
+
+    /* 课程表按钮样式 */
+    .schedule-button {
+        position: fixed;
+        bottom: 20px; 
+        left: 20px; 
+        background-color: var(--primary-color);
+        color: white; 
+        border: none; 
+        width: 146px; 
+        height: 50px; 
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        cursor: pointer; 
+        font-size: 1.1em; 
+        z-index: 1000; 
+        border-radius: 20px;
+        padding-top: 10px; 
+        padding-bottom: 10px; 
+        padding-left:12px; 
+        padding-right: 1px; 
+    }
+
+    /* 遮罩和开场画面样式 */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgb(0, 0, 0);
+        z-index: 999;
         opacity: 1;
-        transform: translateY(0);
+        transition: opacity 1s ease;
     }
-}
 
-/* 按钮样式 */
-button {
-    padding: 15px 30px;
-    font-size: 1.5em;
-    border: none;
-    background-color: var(--primary-color);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    border-radius: 20px;
-}
+    /* 开屏遮罩 */
+    .splashscreen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 5em;
+        color: white;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 1s ease;
+        text-align: center;
+        padding: 0 20px;
+    }
 
-button:hover {
-    background-color: var(--primary-color-hover);
-    transform: scale(1.05);
-}
+    .visible {
+        opacity: 1;
+    }
 
-button:active {
-    transform: scale(0.95);
-}
+    /* 引用人名样式 */
+    .author {
+        align-self: flex-end;
+        margin-top: 0.5em;
+        font-size: 0.4em;
+        margin-right: 250px;
+        text-align: right;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
 
-button:disabled {
-    cursor: not-allowed; 
-    background-color: #ccc; 
-    opacity: 0.6; 
-}
+    /* 背景图样式 */
+    #background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
 
-/* 更新日志按钮样式 */
-.update-log-button {
-    position: fixed;
-    bottom: 20px; 
-    right: 20px;  
-    background-color: var(--primary-color);
-    color: white; 
-    border: none; 
-    width: 146px; 
-    height: 50px; 
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    cursor: pointer; 
-    font-size: 1.2em; 
-    z-index: 1000; 
-    border-radius: 20px;
-    padding-top: 10px; 
-    padding-bottom: 10px; 
-    padding-left: 1px; 
-    padding-right: 1px; 
-}
-
-.update-log-button:disabled {
-    cursor: pointer; 
-    opacity: 0.6;
-}
-
-/* 隐藏样式 */
-.hidden {
-    display: none; /* 控制元素的显示与隐藏 */
-}
-
-/* 更新日志内容样式 */
-.update-log {
-    position: fixed;
-    bottom: 80px; 
-    right: 10px; 
-    background: rgba(255, 255, 255, 0.75); /* 半透明背景 */
-    -webkit-backdrop-filter: blur(55px) saturate(150%); /* 添加模糊效果 */
-    backdrop-filter: blur(55px) saturate(150%); 
-    border: 1px solid rgba(255, 255, 255, 0.4); 
-    border-radius: 20px; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
-    padding: 20px; 
-    max-width: 500px; 
-    z-index: 999; 
-    height: auto; 
-    opacity: 0; 
-    transform: translateY(20px); 
-    text-align: left;
-    transition: opacity 0.3s cubic-bezier(0.2, 0, 0.3, 1), transform 0.3s cubic-bezier(0.2, 0, 0.3, 1); 
-}
-
-/* 显示时的样式 */
-.update-log.visible {
-    opacity: 1; 
-    transform: translateY(0); 
-    max-height: auto; 
-}
-
-.update-log h2 {
-    font-size: 1.5em; 
-    color: #333; 
-    margin: 0 0 10px;
-}
-
-.update-log p {
-    font-size: 1em; 
-    color: #555; 
-    line-height: 1.5; 
-}
-
-.update-log-container {
-    max-height: 350px; 
-    overflow-y: auto; 
-    background-color: rgba(255, 255, 255, 0.9); 
-    border: 1px solid rgba(0, 0, 0, 0.1); 
-    border-radius: 20px; 
-    padding: 10px; 
-    margin-bottom: 20px; 
-}
-
-/* 课程表按钮样式 */
-.schedule-button {
-    position: fixed;
-    bottom: 20px; 
-    left: 20px; 
-    background-color: var(--primary-color);
-    color: white; 
-    border: none; 
-    width: 146px; 
-    height: 50px; 
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    cursor: pointer; 
-    font-size: 1.1em; 
-    z-index: 1000; 
-    border-radius: 20px;
-    padding-top: 10px; 
-    padding-bottom: 10px; 
-    padding-left:12px; 
-    padding-right: 1px; 
-}
-
-/* 遮罩和开场画面样式 */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgb(0, 0, 0);
-    z-index: 999;
-    opacity: 1;
-    transition: opacity 1s ease;
-}
-
-/* 开屏遮罩 */
-.splashscreen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 5em;
-    color: white;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 1s ease;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.visible {
-    opacity: 1;
-}
-
-.hidden {
-    opacity: 0;
-}
-
-/* 引用人名样式 */
-.author {
-    align-self: flex-end;
-    margin-top: 0.5em;
-    font-size: 0.4em;
-    margin-right: 250px;
-    text-align: right;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-/* 背景图样式 */
-#background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
-}
-
-/* 高级材质模糊窗口样式 */
-#modal {
-    position: absolute;
-    width: 85%;
-    height: 75%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.1); 
-    -webkit-backdrop-filter: blur(25px) saturate(150%) contrast(90%);
-    backdrop-filter: blur(25px) saturate(150%) contrast(90%);  
-    border: 1px solid rgba(255, 255, 255, 0.4); 
-    border-radius: 20px; 
-    padding: 20px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
+    /* 高级材质模糊窗口样式 */
+    #modal {
+        position: absolute;
+        width: 85%;
+        height: 75%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.1); 
+        -webkit-backdrop-filter: blur(25px) saturate(150%) contrast(90%);
+        backdrop-filter: blur(25px) saturate(150%) contrast(90%);  
+        border: 1px solid rgba(255, 255, 255, 0.4); 
+        border-radius: 20px; 
+        padding: 20px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 
 
-/* 抽签结果标题容器样式 */
-#result-title-container {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
+    /* 抽签结果标题容器样式 */
+    #result-title-container {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 
-/* 标题样式 */
-#result-title {
-    font-size: 3vw;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
+    /* 标题样式 */
+    #result-title {
+        font-size: 3vw;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
 
-/* 主内容容器样式 */
-#container {
-    text-align: center;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
+    /* 主内容容器样式 */
+    #container {
+        text-align: center;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
 
-/* 空行占位样式 */
-.spacer {
-    flex-grow: 0.1;
-}
+    /* 空行占位样式 */
+    .spacer {
+        flex-grow: 0.1;
+    }
 
-/* 抽签结果文本样式 */
-#result {
-    font-size: 4.9em;
-    color: #ffffff;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    margin-top: 30px;
-    text-align: center;
-}
+    /* 抽签结果文本样式 */
+    #result {
+        font-size: 4.9em;
+        color: #ffffff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        margin-top: 30px;
+        text-align: center;
+    }
 
-/* 向上淡入的动画 */
-.fade-in {
-    opacity: 0;
-    animation: fadeInUp 0.5s forwards;
-}
+    /* 向上淡入的动画 */
+    .fade-in {
+        opacity: 0;
+        animation: fadeInUp 0.5s forwards;
+    }
+    
