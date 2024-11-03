@@ -1,4 +1,4 @@
-// 背景图片数组
+// 背景图片
 const backgroundImages = [
     'assets/background1.png',
     'assets/background2.png',
@@ -8,13 +8,13 @@ const backgroundImages = [
 
 // 开屏动画的文字
 const splashMessages = [
-    { text: "上课！不要讲话！", author: "赵老师" },
-    { text: "好了啊！（捶桌）", author: "赵老师" },
-    { text: "其他同学在演讲，给我认真听", author: "赵老师" },
-    { text: "别讲了！", author: "戴老师" },
-    { text: "找抽啊？", author: "戴老师" },
-    { text: "你们都是天才", author: "戴老师" },
-    { text: "这题谁再给我错，我抽死你", author: "戴老师" },
+    { text: "所谓开拓，就是沿着前人未尽的道路，走出更遥远的距离。", author: "姬子" },
+    { text: "人们因何而沉睡，我想是害怕从梦中醒来", author: "流萤" },
+    { text: "失败的人生，也是人生", author: "真理医生" },
+    { text: "寰宇方圆，星罗棋布，每一手都是抉择。而抉择，铸就命运", author: "景元" },
+    { text: "人心总是追求合理，拼拼凑凑便把不相干的东西组成了一出看起来有意义的幻戏故事，取名人生", author: "符玄" },
+    { text: "所谓不可能之事，只是尚未到来之事", author: "黄泉" },
+    { text: "当最后的鸟儿终于飞上天际，却看到光芒的尽头并非太阳，而是漆黑的大日，那我们究竟是为了什么，才要向光而行", author: "黄泉" },
 ];
 
 // 页面加载完成后显示开屏动画
@@ -29,142 +29,102 @@ window.onload = function() {
     document.body.style.backgroundSize = 'cover'; // 使背景图像覆盖整个屏幕
     document.body.style.backgroundPosition = 'center'; // 使背景图像居中
 
+    // 随机选择开屏消息
     const { text, author } = splashMessages[Math.floor(Math.random() * splashMessages.length)];
     document.getElementById("quote-text").textContent = `“${text}”`;
     document.getElementById("quote-author").textContent = `—— ${author}`;
     splashscreen.classList.add("visible");
 
-    // 设置淡出效果
+    // 分开淡出效果
     setTimeout(() => {
-        splashscreen.classList.remove("visible");
-        overlay.style.opacity = "0";
-        setTimeout(() => {
-            splashscreen.style.display = "none";
-            overlay.style.display = "none";
-        }, 1000);
-    }, 2000);
+        fadeOutSplashText(splashscreen);
+    }, 2750); // 文字淡出时间
+
+    setTimeout(() => {
+        fadeOutOverlay(overlay);
+    }, 3000); // 背景淡出时间
 
     // 提取颜色
     extractColorFromImage(selectedImage); // 传入随机选择的背景图片
 };
 
+// 淡出开屏文字
+function fadeOutSplashText(splashscreen) {
+    splashscreen.classList.remove("visible");
+    setTimeout(() => {
+        splashscreen.style.display = "none";
+    }, 1500);
+}
+
+// 淡出覆盖层
+function fadeOutOverlay(overlay) {
+    overlay.style.opacity = "0";
+    setTimeout(() => {
+        overlay.style.display = "none";
+    }, 1000);
+}
+
 // 从背景图像提取主题色
 function extractColorFromImage(imageSrc) {
     const img = new Image();
-    img.src = imageSrc; // 使用传入的背景图像路径
+    img.src = imageSrc;
 
     img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0, img.width, img.height);
-        
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        const colorCount = {};
-        let r, g, b, a;
-
-        // 遍历图像数据，统计颜色
-        for (let i = 0; i < data.length; i += 4) {
-            r = data[i];
-            g = data[i + 1];
-            b = data[i + 2];
-            a = data[i + 3];
-
-            if (a > 0) { // 只考虑非透明的像素
-                const colorKey = `${r},${g},${b}`;
-                colorCount[colorKey] = (colorCount[colorKey] || 0) + 1;
-            }
-        }
+        const canvas = createCanvasForImage(img);
+        const colorCount = countColorsInImage(canvas);
 
         // 找到出现最多的颜色
-        let dominantColor = '';
-        let maxCount = 0;
-        for (const color in colorCount) {
-            if (colorCount[color] > maxCount) {
-                maxCount = colorCount[color];
-                dominantColor = color;
-            }
-        }
+        const dominantColor = findDominantColor(colorCount);
 
         // 更新主题色
         document.documentElement.style.setProperty('--primary-color', `rgba(${dominantColor}, 0.8)`);
         document.documentElement.style.setProperty('--primary-color-hover', `rgba(${dominantColor}, 1)`);
     };
 
-    img.onerror = function() {
-        console.error('无法加载背景图像');
-    };
+    img.onerror = () => console.error('无法加载背景图像');
 }
 
-// K-means 算法实现
-function kMeans(data, k) {
-    let centroids = initializeCentroids(data, k);
-    let assignments = new Array(data.length);
-    let changed = true;
-
-    while (changed) {
-        changed = false;
-
-        // 分配每个点到最近的质心
-        for (let i = 0; i < data.length; i++) {
-            const closest = findClosestCentroid(data[i], centroids);
-            if (assignments[i] !== closest) {
-                assignments[i] = closest;
-                changed = true;
-            }
-        }
-
-        // 更新质心
-        for (let j = 0; j < k; j++) {
-            centroids[j] = calculateCentroid(data, assignments, j);
-        }
-    }
-
-    return { centroids, assignments };
+// 创建用于绘制图像的canvas
+function createCanvasForImage(img) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    return canvas;
 }
 
-function initializeCentroids(data, k) {
-    const shuffled = data.slice().sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, k);
-}
+// 统计图像中的颜色
+function countColorsInImage(canvas) {
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    const colorCount = {};
 
-function findClosestCentroid(point, centroids) {
-    let closest = 0;
-    let minDistance = Infinity;
-
-    for (let i = 0; i < centroids.length; i++) {
-        const distance = euclideanDistance(point, centroids[i]);
-        if (distance < minDistance) {
-            minDistance = distance;
-            closest = i;
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+        if (a > 0) { // 只考虑非透明像素
+            const colorKey = `${r},${g},${b}`;
+            colorCount[colorKey] = (colorCount[colorKey] || 0) + 1;
         }
     }
 
-    return closest;
+    return colorCount;
 }
 
-function calculateCentroid(data, assignments, k) {
-    const points = data.filter((_, i) => assignments[i] === k);
-    const dimension = data[0].length;
+// 找到出现最多的颜色
+function findDominantColor(colorCount) {
+    let dominantColor = '';
+    let maxCount = 0;
 
-    if (points.length === 0) return new Array(dimension).fill(0);
+    for (const color in colorCount) {
+        if (colorCount[color] > maxCount) {
+            maxCount = colorCount[color];
+            dominantColor = color;
+        }
+    }
 
-    const centroid = new Array(dimension).fill(0);
-    points.forEach(point => {
-        point.forEach((value, index) => {
-            centroid[index] += value;
-        });
-    });
-
-    return centroid.map(value => value / points.length);
-}
-
-function euclideanDistance(pointA, pointB) {
-    return Math.sqrt(pointA.reduce((sum, value, index) => {
-        return sum + Math.pow(value - pointB[index], 2);
-    }, 0));
+    return dominantColor;
 }
 
 // 切换更新日志的显示状态
@@ -172,49 +132,50 @@ function toggleUpdateLog() {
     const updateLog = document.querySelector('.update-log');
     const updateLogButton = document.querySelector('.update-log-button');
 
-    // 禁用按钮，防止重复点击
     updateLogButton.disabled = true;
 
     if (updateLog.classList.contains('visible')) {
-        updateLog.classList.remove('visible'); // 隐藏更新日志
-        setTimeout(() => {
-            updateLog.style.display = "none"; // 在动画结束后隐藏
-            updateLogButton.style.backgroundColor = ''; // 恢复原色
-            updateLogButton.disabled = false; // 恢复按钮
-        }, 300); // 等待过渡结束
+        hideUpdateLog(updateLog, updateLogButton);
     } else {
-        updateLog.style.display = "block"; // 显示更新日志
-        setTimeout(() => {
-            updateLog.classList.add('visible'); // 过渡动画
-            updateLogButton.style.backgroundColor = '#ccc'; // 灰白色
-            updateLogButton.disabled = false; // 恢复按钮
-        }, 10); // 小延迟确保样式生效
+        showUpdateLog(updateLog, updateLogButton);
     }
 }
 
 // 显示更新日志
-document.getElementById('update-log').classList.remove('hidden');
+function showUpdateLog(updateLog, updateLogButton) {
+    updateLog.style.display = "block";
+    setTimeout(() => {
+        updateLog.classList.add('visible');
+        updateLogButton.style.backgroundColor = '#ccc';
+        updateLogButton.disabled = false;
+    }, 10);
+}
 
 // 隐藏更新日志
-document.getElementById('update-log').classList.add('hidden');
+function hideUpdateLog(updateLog, updateLogButton) {
+    updateLog.classList.remove('visible');
+    setTimeout(() => {
+        updateLog.style.display = "none";
+        updateLogButton.style.backgroundColor = '';
+        updateLogButton.disabled = false;
+    }, 300);
+}
 
 // 点击事件监听器
 window.addEventListener('click', function(event) {
     const updateLog = document.querySelector('.update-log');
     const updateLogButton = document.querySelector('.update-log-button');
 
-    // 如果点击的不是更新日志和按钮，则隐藏更新日志
     if (!updateLog.contains(event.target) && !updateLogButton.contains(event.target)) {
-        updateLog.classList.remove('visible');
-        updateLogButton.style.backgroundColor = ''; // 恢复原色
-        updateLogButton.disabled = false; // 恢复按钮
+        hideUpdateLog(updateLog, updateLogButton);
     }
 });
 
-// 抽签系统配置
-const minNumber = 1, maxNumber = 57, drawnNumbers = [];
-
 // 抽签逻辑
+const minNumber = 1;
+const maxNumber = 57;
+const drawnNumbers = [];
+
 function drawLot() {
     const button = document.querySelector("button");
     const resultElement = document.getElementById("result");
@@ -228,34 +189,43 @@ function drawLot() {
     button.style.backgroundColor = "#ccc";
     resultElement.style.cssText = "display: flex; justify-content: center; align-items: center; font-size: 10em;";
 
-    const duration = 2000, startTime = Date.now();
+    const duration = 2000;
+    const startTime = Date.now();
+    
+    displayRandomNumber(resultElement, startTime, duration, button);
+}
+
+// 显示随机数字
+function displayRandomNumber(resultElement, startTime, duration, button) {
     let finalNumber;
 
-    function displayRandomNumber() {
+    function generateRandomNumber() {
         do {
             finalNumber = getRandomNumber();
-        } while (drawnNumbers.includes(finalNumber)); // 检查是否重复抽取
-        
+        } while (drawnNumbers.includes(finalNumber));
+
         resultElement.innerText = finalNumber;
 
         if (Date.now() - startTime < duration) {
-            setTimeout(displayRandomNumber, 1);
+            setTimeout(generateRandomNumber, 1);
         } else {
-            showFinalResult();
+            showFinalResult(finalNumber, resultElement, button);
         }
     }
 
-    function showFinalResult() {
-        drawnNumbers.push(finalNumber); // 将抽取的学号添加到已抽取列表
-        resultElement.innerText = `${finalNumber} 号，站！`;
-        button.disabled = true; // 禁用按钮
-        setTimeout(() => {
-            button.disabled = false; // 500ms后恢复按钮
-            button.style.backgroundColor = ""; // 恢复按钮样式
-        }, 500);
-    }
+    generateRandomNumber();
+}
 
-    displayRandomNumber();
+// 显示最终结果
+function showFinalResult(finalNumber, resultElement, button) {
+    drawnNumbers.push(finalNumber);
+    resultElement.innerText = `${finalNumber} 号，站！`;
+    button.disabled = true;
+
+    setTimeout(() => {
+        button.disabled = false;
+        button.style.backgroundColor = "";
+    }, 500);
 }
 
 // 生成指定范围内的随机数
@@ -263,56 +233,7 @@ function getRandomNumber() {
     return Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
 }
 
-// 课程表
+// 课程表功能
 function showSchedule() {
     alert("课程表功能正在开发中，敬请期待！");
 }
-
-// 音乐播放器
-function toggleMusicPlayer() {
-    const musicPlayer = document.getElementById("music-player");
-    if (musicPlayer.style.display === "none" || musicPlayer.style.display === "") {
-        musicPlayer.style.display = "block";
-        showCurrentSong(); // 显示当前歌曲信息
-    } else {
-        musicPlayer.style.display = "none";
-    }
-}
-
-function playMusic() {
-    const audio = document.getElementById("audio");
-    audio.play();
-}
-
-function pauseMusic() {
-    const audio = document.getElementById("audio");
-    audio.pause();
-}
-
-const currentSong = {
-    title: "示例歌曲名",
-    artist: "示例歌手名"
-};
-
-const musicPlayerButton = document.querySelector(".music-player-button");
-
-// 事件监听器
-musicPlayerButton.addEventListener("click", toggleMusicPlayer);
-
-// 更新歌曲信息的函数
-function showCurrentSong() {
-    const songInfo = document.querySelector(".current-song");
-    if (songInfo) {
-        songInfo.textContent = `${currentSong.title} - ${currentSong.artist}`;
-    } else {
-        const newSongInfo = document.createElement("div");
-        newSongInfo.className = "current-song";
-        newSongInfo.textContent = `${currentSong.title} - ${currentSong.artist}`;
-        musicPlayer.appendChild(newSongInfo);
-    }
-}
-
-// 初始化时显示歌曲信息
-document.addEventListener("DOMContentLoaded", () => {
-    showCurrentSong(); // 初始显示当前播放的歌曲信息
-});
