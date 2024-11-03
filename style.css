@@ -8,8 +8,8 @@
 
 /* 页面基本样式 */
 :root {
-    --primary-color: rgba(0, 123, 255, 0.8);
-    --primary-color-hover: rgba(0, 123, 255, 1);
+    --primary-color: rgba(0, 0, 0, 0.8);
+    --primary-color-hover: rgb(0, 0, 0);
     --bg-color: #f0f0f0;
     --shadow-color: rgba(0, 0, 0, 0.5);
 }
@@ -223,7 +223,7 @@ button:disabled {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 3.0em;
+    font-size: 3.25em;
 
     /* 调整字体大小 */
     color: white;
@@ -260,7 +260,7 @@ button:disabled {
 .author {
     align-self: flex-end;
     margin-top: 0.5em;
-    font-size: 0.75em;
+    font-size: 0.6em;
     /* 增加字体大小 */
     margin-right: 20px;
     /* 调整右边距 */
