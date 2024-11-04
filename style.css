@@ -1,7 +1,7 @@
 /* 字体设置 */
 @font-face {
     font-family: 'MiSans';
-    src: url('https://font.sec.miui.com/font/css?family=MiSans:400,450:Chinese_Simplify,Latin&display=swap') format('truetype');
+    src: url('font/MiSansVF.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
@@ -166,7 +166,7 @@ button:disabled {
 }
 
 .update-log-container {
-    max-height: 350px;
+    max-height: 250px;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -223,7 +223,7 @@ button:disabled {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 3.25em;
+    font-size: 3em;
 
     /* 调整字体大小 */
     color: white;
@@ -264,7 +264,7 @@ button:disabled {
     /* 增加字体大小 */
     margin-right: 20px;
     /* 调整右边距 */
-    text-align: right;
+    text-align: center;
     width: 100%;
     display: flex;
     justify-content: flex-end;

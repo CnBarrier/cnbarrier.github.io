@@ -6,21 +6,27 @@ const backgroundImages = [
     'assets/background/background4.png',
     'assets/background/background5.png',
     'assets/background/background6.png',
+    'assets/background/background7.png',
+    'assets/background/background8.png',
+
 ];
 
 // 开屏动画的文字
 const splashMessages = [
     { text: "所谓开拓，就是沿着前人未尽的道路，走出更遥远的距离。", author: "姬子" },
-    { text: "人们因何而沉睡，我想是害怕从梦中醒来", author: "流萤" },
-    { text: "失败的人生，也是人生", author: "真理医生" },
+    { text: "生命因何而沉睡，是因为人们害怕从梦中醒来", author: "星期日" },
+    { text: "希望在旅途的终点，每个人都能抵达向往的结局", author: "流萤" },
+    { text: "失败的人生同样是人生，他们有权品尝至最后，也只有摔倒在地无人扶起的时候，愚者才能领悟如何站起", author: "真理医生" },
     { text: "寰宇方圆，星罗棋布，每一手都是抉择。而抉择，铸就命运", author: "景元" },
     { text: "说书也好，幻戏也罢，故事的结局都是注定的。人生和命运也是同样的道理，无论结局是否注定，都值得一过", author: "景元" },
     { text: "人心总是追求合理，拼拼凑凑便把不相干的东西组成了一出看起来有意义的幻戏故事，取名人生", author: "符玄" },
     { text: "所谓不可能之事，只是尚未到来之事", author: "黄泉" },
     { text: "当最后的鸟儿终于飞上天际，却看到光芒的尽头并非太阳，而是漆黑的大日，那我们究竟是为了什么，才要向光而行", author: "黄泉" },
     { text: "我的过去，或许不在从前，而是在我的未来里。所以，我一定会一站一站的走下去，哪怕有一天，没有列车", author: "三月七" },
-    { text: "我的过去，或许不在从前，而是在我的未来里。所以，我一定会一站一站的走下去，哪怕有一天，没有列车", author: "三月七" },
-    { text: "我的过去，或许不在从前，而是在我的未来里。所以，我一定会一站一站的走下去，哪怕有一天，没有列车", author: "三月七" },
+    { text: "人们并非只有“齐唱”一种选择，即便发出各异的声音，它们也能彼此串联", author: "知更鸟" },
+    { text: "鸟儿，生来就属于天空", author: "知更鸟" },
+    { text: "如果夜空中总有什么要亮起，那么在第一颗星星落下后，还会有无数的流星划过天际", author: "丹恒" },
+    { text: "生命是一座迂回的迷宫，除了记忆，我们一无所有", author: "？？？" },
 
 ];
 
@@ -38,7 +44,7 @@ window.onload = function() {
 
     // 随机选择开屏消息
     const { text, author } = splashMessages[Math.floor(Math.random() * splashMessages.length)];
-    document.getElementById("quote-text").textContent = `“${text}”`;
+    document.getElementById("quote-text").textContent = `${text}`;
     document.getElementById("quote-author").textContent = `—— ${author}`;
     splashscreen.classList.add("visible");
 
