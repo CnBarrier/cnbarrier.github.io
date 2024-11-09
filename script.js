@@ -8,6 +8,7 @@ const backgroundImages = [
     'assets/background/background6.png',
     'assets/background/background7.png',
     'assets/background/background8.png',
+    'assets/background/background9.png',
 
 ];
 
