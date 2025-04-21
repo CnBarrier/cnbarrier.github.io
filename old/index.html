@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牢九班の抽签系统</title>
+    <link rel="stylesheet" href="style.css?v=1.2.5" type="text/css; charset=utf-8">
+    <script src="script.js?v=1.2.5" defer></script>
+    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <div id="splashscreen" class="splashscreen">
+        <span id="quote-text"></span>
+        <div id="quote-author" class="author"></div>
+    </div>
+
+    <div id="background"></div>
+
+    <div id="modal">
+        <div id="result-title-container">
+            <span id="result-title">牢九班の抽签系统 | V1.4</span>
+        </div>
+    
+        <div id="container">
+            <div id="spacer" class="spacer"></div>
+            <div id="result">↓ 按下按钮后输出倒霉蛋学号 ↓</div>
+        </div>
+    
+        <div id="button-container">
+            <button onclick="drawLot()">开始抽签</button>
+        </div>
+
+        <div class="button-container">
+            <button class="update-log-button" onclick="toggleUpdateLog()">📝更新日志</button>
+            <button class="schedule-button" onclick="showSchedule()">课程表（Beta）</button>
+        </div>
+        
+        <!-- 更新日志内容 -->
+        <div id="update-log" class="update-log hidden">
+
+            <h1>更新日志</h1>
+            <h2>V1.3 | 24.11.4</h2>
+            <div class="update-log-container">
+                
+                <h3>新增功能</h3>
+                <div class="update-log-content">
+                    <div>· 添加 “更新日志” 按钮，现在可以查看最新的和以往的更新内容，并添加了相关动画效果</div>
+                    <div>· 实现了从背景图中提取主色调，并动态应用于按钮的背景色，提升了界面的美观度</div>
+                </div>
+            
+                <h3>优化与修复</h3>
+                <div class="update-log-content">
+                    <div>· 修复了同一个学号会被连续抽取两次的问题，避免了重复抽取的错误</div>
+                    <div>· 精简了代码，合并了按钮变色和更新日志显示逻辑，使代码更加简洁易读</div>
+                    <div>· 大幅度降低了网页的LCP值（~40%），使网页的元素加载更快</div>
+                    <div>· 进一步优化了页面的样式，使其更加美观</div>
+                </div>
+            
+                <h3>其他</h3>
+                <div class="update-log-content">
+                    <div>· 新增了更多金句作为开屏内容</div>
+                    <div>· 请注意，更新内容可能会根据测试反馈进行进一步调整，世界上不存在没有BUG的代码！</div>
+                </div>
+            </div>            
+        </div>   
+    </div>
+    
+</body>
+</html>
